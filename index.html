@@ -626,6 +626,228 @@
         .no-results-text {
             font-size: 0.95rem;
         }
+
+        /* Welcome Modal */
+        .welcome-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .welcome-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .welcome-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .welcome-content {
+            position: relative;
+            background: var(--background);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.4s ease both;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-30px) scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .welcome-header {
+            padding: 2rem 2rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .welcome-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--accent-color), #00d2a0);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-icon .material-icons {
+            font-size: 32px;
+            color: white;
+        }
+
+        .welcome-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .welcome-body {
+            padding: 2rem;
+        }
+
+        .guide-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            animation: guideItemFadeIn 0.5s ease both;
+        }
+
+        .guide-item:nth-child(1) { animation-delay: 0.1s; }
+        .guide-item:nth-child(2) { animation-delay: 0.2s; }
+        .guide-item:nth-child(3) { animation-delay: 0.3s; }
+        .guide-item:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes guideItemFadeIn {
+            from {
+                transform: translateX(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .guide-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .guide-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--surface);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .guide-icon .material-icons {
+            font-size: 24px;
+            color: var(--accent-color);
+        }
+
+        .guide-text {
+            flex: 1;
+        }
+
+        .guide-text h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 0 0.25rem;
+        }
+
+        .guide-text p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .welcome-footer {
+            padding: 1.5rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .welcome-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .welcome-btn:hover {
+            background: #00a885;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 184, 148, 0.3);
+        }
+
+        .welcome-btn:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 480px) {
+            .welcome-content {
+                border-radius: 16px;
+            }
+
+            .welcome-header {
+                padding: 1.5rem 1.5rem 1rem;
+            }
+
+            .welcome-title {
+                font-size: 1.25rem;
+            }
+
+            .welcome-body {
+                padding: 1.5rem;
+            }
+
+            .guide-item {
+                gap: 0.75rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .guide-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .guide-icon .material-icons {
+                font-size: 20px;
+            }
+
+            .guide-text h3 {
+                font-size: 0.9rem;
+            }
+
+            .guide-text p {
+                font-size: 0.8rem;
+            }
+
+            .welcome-footer {
+                padding: 1rem 1.5rem 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -722,6 +944,66 @@
                 <span class="category-text">鋁罐</span>
             </button>
         </div>
+    </div>
+
+    <!-- Welcome Guide Modal -->
+    <div class="welcome-modal active" id="welcomeModal">
+        <div class="welcome-backdrop"></div>
+        <div class="welcome-content">
+            <div class="welcome-header">
+                <span class="welcome-icon">
+                    <span class="material-icons">info</span>
+                </span>
+                <h2 class="welcome-title" id="welcomeTitle">使用說明</h2>
+            </div>
+            
+            <div class="welcome-body">
+                <div class="guide-item">
+                    <div class="guide-icon">
+                        <span class="material-icons">language</span>
+                    </div>
+                    <div class="guide-text">
+                        <h3 id="guideLanguageTitle">切換語言</h3>
+                        <p id="guideLanguageDesc">點擊右上角的地球圖示可以在中文和英文之間切換</p>
+                    </div>
+                </div>
+                
+                <div class="guide-item">
+                    <div class="guide-icon">
+                        <span class="material-icons">search</span>
+                    </div>
+                    <div class="guide-text">
+                        <h3 id="guideSearchTitle">搜尋功能</h3>
+                        <p id="guideSearchDesc">在搜尋框中輸入垃圾名稱,支援中文、英文、拼音模糊搜尋</p>
+                    </div>
+                </div>
+                
+                <div class="guide-item">
+                    <div class="guide-icon">
+                        <span class="material-icons">grid_view</span>
+                    </div>
+                    <div class="guide-text">
+                        <h3 id="guideViewTitle">檢視模式</h3>
+                        <p id="guideViewDesc">點擊右下角的圖示可以在列表和圖塊模式之間切換</p>
+                    </div>
+                </div>
+                
+                <div class="guide-item">
+                    <div class="guide-icon">
+                        <span class="material-icons">category</span>
+                    </div>
+                    <div class="guide-text">
+                        <h3 id="guideCategoryTitle">選擇分類</h3>
+                        <p id="guideCategoryDesc">點擊右下角的「選擇分類」按鈕可以快速篩選不同類別的垃圾</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="welcome-footer">
+                <button class="welcome-btn" id="welcomeBtn">
+                    <span id="welcomeBtnText">開始使用</span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -799,6 +1081,8 @@
         const mainContent = document.getElementById('mainContent');
         const languageToggle = document.getElementById('languageToggle');
         const logoText = document.getElementById('logoText');
+        const welcomeModal = document.getElementById('welcomeModal');
+        const welcomeBtn = document.getElementById('welcomeBtn');
 
         // ===== 多語言文字 =====
         const translations = {
@@ -815,7 +1099,17 @@
                 glass: '玻璃',
                 can: '鐵罐',
                 aluminumCan: '鋁罐',
-                noResults: '找不到相關結果'
+                noResults: '找不到相關結果',
+                welcomeTitle: '使用說明',
+                guideLanguageTitle: '切換語言',
+                guideLanguageDesc: '點擊右上角的地球圖示可以在中文和英文之間切換',
+                guideSearchTitle: '搜尋功能',
+                guideSearchDesc: '在搜尋框中輸入垃圾名稱,支援中文、英文、拼音模糊搜尋',
+                guideViewTitle: '檢視模式',
+                guideViewDesc: '點擊右下角的圖示可以在列表和圖塊模式之間切換',
+                guideCategoryTitle: '選擇分類',
+                guideCategoryDesc: '點擊右下角的「選擇分類」按鈕可以快速篩選不同類別的垃圾',
+                welcomeBtnText: '開始使用'
             },
             en: {
                 title: 'CES Waste Classification',
@@ -830,7 +1124,17 @@
                 glass: 'Glass',
                 can: 'Can',
                 aluminumCan: 'Aluminum Can',
-                noResults: 'No results found'
+                noResults: 'No results found',
+                welcomeTitle: 'User Guide',
+                guideLanguageTitle: 'Switch Language',
+                guideLanguageDesc: 'Click the globe icon in the top right to switch between Chinese and English',
+                guideSearchTitle: 'Search Function',
+                guideSearchDesc: 'Enter waste item names in the search box, supports Chinese, English, and Pinyin fuzzy search',
+                guideViewTitle: 'View Mode',
+                guideViewDesc: 'Click the icon in the bottom right to switch between list and gallery view',
+                guideCategoryTitle: 'Select Category',
+                guideCategoryDesc: 'Click the "Category" button in the bottom right to quickly filter different waste categories',
+                welcomeBtnText: 'Get Started'
             }
         };
 
@@ -888,6 +1192,18 @@
             searchInput.placeholder = t.searchPlaceholder;
             categoryFloatBtn.querySelector('span:last-child').textContent = t.selectCategory;
             document.querySelector('.category-popup-title').textContent = t.categoryTitle;
+            
+            // 更新歡迎彈窗文字
+            document.getElementById('welcomeTitle').textContent = t.welcomeTitle;
+            document.getElementById('guideLanguageTitle').textContent = t.guideLanguageTitle;
+            document.getElementById('guideLanguageDesc').textContent = t.guideLanguageDesc;
+            document.getElementById('guideSearchTitle').textContent = t.guideSearchTitle;
+            document.getElementById('guideSearchDesc').textContent = t.guideSearchDesc;
+            document.getElementById('guideViewTitle').textContent = t.guideViewTitle;
+            document.getElementById('guideViewDesc').textContent = t.guideViewDesc;
+            document.getElementById('guideCategoryTitle').textContent = t.guideCategoryTitle;
+            document.getElementById('guideCategoryDesc').textContent = t.guideCategoryDesc;
+            document.getElementById('welcomeBtnText').textContent = t.welcomeBtnText;
             
             // 更新分類按鈕文字
             const categoryButtons = document.querySelectorAll('.category-popup-item');
@@ -1034,6 +1350,11 @@
         }
 
         // ===== 事件處理 =====
+        // 歡迎彈窗
+        welcomeBtn.addEventListener('click', () => {
+            welcomeModal.classList.remove('active');
+        });
+
         // 語言切換
         languageToggle.addEventListener('click', () => {
             // 在中英文之間切換
