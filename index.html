@@ -718,6 +718,9 @@
             <button class="category-popup-item" data-category="鐵罐">
                 <span class="category-text">鐵罐</span>
             </button>
+            <button class="category-popup-item" data-category="鋁罐">
+                <span class="category-text">鋁罐</span>
+            </button>
         </div>
         </div>
     </div>
@@ -726,11 +729,13 @@
         // ===== 資料結構 =====
         // 範例資料格式 - 實際使用時替換為真實資料
         const wasteData = [
-             // 廚餘
+            // 廚餘
             { name: "香蕉皮", nameEn: "Banana Peel", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Banana_%28partially_peeled%29.jpg/250px-Banana_%28partially_peeled%29.jpg", category: "廚餘" },
             { name: "雞骨頭", nameEn: "Chicken Bone", image: "https://thumbs.dreamstime.com/b/%E9%B8%A1%E9%AA%A8-78360422.jpg", category: "廚餘" },
             { name: "蝦殼", nameEn: "Shrimp Shell", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWBNGcJrdAxkToxYQmhrIW5a3ktGmrzEhkSQ&s", category: "廚餘" },
             { name: "咖啡渣", nameEn: "Coffee Grounds", image: "https://img.technews.tw/wp-content/uploads/2018/08/24173206/coffee-ground.jpg", category: "廚餘" },
+            { name: "蛋殼", nameEn: "Eggshell", image: "https://i.epochtimes.com/assets/uploads/2024/08/id14319462-shutterstock_1928377061-600x364.jpg", category: "廚餘" },
+            { name: "果皮(橘子皮)", nameEn: "Fruit Peel (Orange Peel)", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTc4s-AWX5uuyzYpS1owmqgz4pHc6df3vs6qg&s", category: "廚餘" },
             
             // 一般垃圾
             { name: "蛤蠣殼", nameEn: "Clam Shell", image: "https://thumb.photo-ac.com/e7/e78463c144436261656b6ecf012423bf_t.jpeg", category: "一般垃圾" },
@@ -751,29 +756,33 @@
             { name: "咖啡濾紙", nameEn: "Coffee Filter", image: "https://cdn.store-assets.com/s/1163940/i/57536312.jpeg", category: "一般垃圾" },
             { name: "瓦楞紙箱", nameEn: "Corrugated Cardboard", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhYbzYWFhZww3dBwCqqXPMidr3IQhXSu7_tA&s", category: "一般垃圾" },
             { name: "玉米芯", nameEn: "Corn Cob", image: "https://noahgetaways.tw/wp-content/uploads/2025/12/19/019f92b2a66ad3c29067361e65974a31.jpeg", category: "一般垃圾" },
+            { name: "優格杯", nameEn: "Yogurt Cup", image: "https://static.iyp.tw/39729/products/photooriginal-1775866-fDxYU.jpg", category: "一般垃圾" },
             
             // 紙容器/鋁箔包
-            { name: "紙餐盒", nameEn: "Paper Lunch Box", image: "https://shoplineimg.com/61ad5f979f75e0003beb2db0/66e1303bf28172000da58d97/800x.jpg?", category: "紙容器/鋁箔包" },
-            { name: "食品紙袋(內層鍍膜)", nameEn: "Coated Paper Bag", image: "https://img.91app.com/webapi/imagesV3/Original/SalePage/8668649/0/638605189771900000?v=1", category: "紙容器/鋁箔包" },
-            { name: "比薩盒", nameEn: "Pizza Box", image: "https://static01.nyt.com/images/2018/05/21/climate/20cli-aspirational-pizza/20cli-aspirational-pizza-master1050.jpg", category: "紙容器/鋁箔包" },
-            { name: "手搖飲料杯", nameEn: "Bubble Tea Cup", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT70mqkB19oit-fvhD-DJCMVuMWg-wIlB7t3A&s", category: "紙容器/鋁箔包" },
+            { name: "紙餐盒", nameEn: "Paper Lunch Box", image: "https://via.placeholder.com/200?text=紙餐盒", category: "紙容器/鋁箔包" },
+            { name: "食品紙袋(內層鍍膜)", nameEn: "Coated Paper Bag", image: "https://via.placeholder.com/200?text=食品紙袋(內層鍍膜)", category: "紙容器/鋁箔包" },
+            { name: "比薩盒", nameEn: "Pizza Box", image: "https://via.placeholder.com/200?text=比薩盒", category: "紙容器/鋁箔包" },
+            { name: "手搖飲料杯", nameEn: "Bubble Tea Cup", image: "https://via.placeholder.com/200?text=手搖飲料杯", category: "紙容器/鋁箔包" },
             
             // 紙類
-            { name: "手提紙購物袋", nameEn: "Paper Shopping Bag", image: "https://www.9x9.tw/public/files/product/thumb/N72375-95005S.jpg", category: "紙類" },
-            { name: "食品紙袋(包裝用)", nameEn: "Food Packaging Paper Bag", image: "https://www.brain.com.tw/Upload/News/2(249).jpg", category: "紙類" },
-            { name: "碎紙", nameEn: "Shredded Paper", image: "https://www.biccamera.com.c.lj.hpcn.transer-cn.com/bc/include_cms_contents/topics/osusume_shredder/osusume_shredder_05.jpg", category: "紙類" },
-            { name: "各式廣告傳單文宣", nameEn: "Flyers and Brochures", image: "https://40152013.weebly.com/uploads/1/9/5/9/19590661/9955371.jpg?244", category: "紙類" },
-            { name: "舊書", nameEn: "Old Books", image: "https://717.com.hk/wp-content/uploads/2017/05/20170421_102454.jpg", category: "紙類" },
+            { name: "手提紙購物袋", nameEn: "Paper Shopping Bag", image: "https://via.placeholder.com/200?text=手提紙購物袋", category: "紙類" },
+            { name: "食品紙袋(包裝用)", nameEn: "Food Packaging Paper Bag", image: "https://via.placeholder.com/200?text=食品紙袋(包裝用)", category: "紙類" },
+            { name: "碎紙", nameEn: "Shredded Paper", image: "https://via.placeholder.com/200?text=碎紙", category: "紙類" },
+            { name: "各式廣告傳單文宣", nameEn: "Flyers and Brochures", image: "https://via.placeholder.com/200?text=各式廣告傳單文宣", category: "紙類" },
+            { name: "舊書", nameEn: "Old Books", image: "https://via.placeholder.com/200?text=舊書", category: "紙類" },
             
             // 玻璃
-            { name: "玻璃調味罐", nameEn: "Glass Seasoning Jar", image: "https://cdn2.ettoday.net/images/5205/d5205035.jpg", category: "玻璃" },
+            { name: "玻璃調味罐", nameEn: "Glass Seasoning Jar", image: "https://via.placeholder.com/200?text=玻璃調味罐", category: "玻璃" },
             
             // 鐵罐
-            { name: "麥香鐵罐裝飲料", nameEn: "Mai Xiang Canned Drink", image: "https://cf.shopee.tw/file/tw-11134207-7r991-lxb97g4e6vcgfc", category: "鐵罐" },
-            { name: "伯朗鐵罐裝飲料", nameEn: "Mr. Brown Canned Drink", image: "https://cdn-next.cybassets.com/media/W1siZiIsIjE2Mjk2L3Byb2R1Y3RzLzQyMzc3Mjk0LzE2OTUzNjMzNDFfZjVhMTAzZDA4OWE0MTU1ZTM0YTAuanBlZyJdLFsicCIsInRodW1iIiwiNjAweDYwMCJdXQ.jpeg?sha=d6eafd2475c01b66", category: "鐵罐" },
+            { name: "麥香鐵罐裝飲料", nameEn: "Mai Xiang Canned Drink", image: "https://via.placeholder.com/200?text=麥香鐵罐裝飲料", category: "鐵罐" },
+            { name: "伯朗鐵罐裝飲料", nameEn: "Mr. Brown Canned Drink", image: "https://via.placeholder.com/200?text=伯朗鐵罐裝飲料", category: "鐵罐" },
+            
+            // 鋁罐
+            { name: "汽水罐", nameEn: "Soda Can", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRr1oOB1hMZ4fhLr0m0p3oS15t3axebZCdTlg&s", category: "鋁罐" },
         ];
 
-        const categories = ["一般垃圾", "廚餘", "紙容器/鋁箔包", "紙類", "玻璃", "鐵罐"];
+        const categories = ["一般垃圾", "廚餘", "紙容器/鋁箔包", "紙類", "玻璃", "鐵罐", "鋁罐"];
 
         // ===== 狀態管理 =====
         let currentView = 'gallery'; // 'list' or 'gallery'，預設為畫廊
@@ -805,6 +814,7 @@
                 paper: '紙類',
                 glass: '玻璃',
                 can: '鐵罐',
+                aluminumCan: '鋁罐',
                 noResults: '找不到相關結果'
             },
             en: {
@@ -819,6 +829,7 @@
                 paper: 'Paper',
                 glass: 'Glass',
                 can: 'Can',
+                aluminumCan: 'Aluminum Can',
                 noResults: 'No results found'
             }
         };
@@ -830,7 +841,8 @@
             '紙容器/鋁箔包': 'Paper Container',
             '紙類': 'Paper',
             '玻璃': 'Glass',
-            '鐵罐': 'Can'
+            '鐵罐': 'Can',
+            '鋁罐': 'Aluminum Can'
         };
 
         // ===== 繁簡英轉換表 =====
@@ -886,6 +898,7 @@
             categoryButtons[4].querySelector('.category-text').textContent = t.paper;
             categoryButtons[5].querySelector('.category-text').textContent = t.glass;
             categoryButtons[6].querySelector('.category-text').textContent = t.can;
+            categoryButtons[7].querySelector('.category-text').textContent = t.aluminumCan;
             
             // 重新渲染當前內容
             const searchTerm = searchInput.value.trim();
