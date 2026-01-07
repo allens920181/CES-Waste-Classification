@@ -926,27 +926,67 @@
 
         function fuzzySearch(searchTerm, items) {
             searchTerm = normalizeText(searchTerm);
+            const searchTermLower = searchTerm.toLowerCase();
             
             return items.filter(item => {
                 const itemName = normalizeText(item.name);
                 const itemNameEn = item.nameEn ? item.nameEn.toLowerCase() : '';
                 const itemCategory = normalizeText(item.category);
                 
-                // 完全匹配（中文或英文）
+                // 1. 完全匹配（中文或英文）
                 if (itemName.includes(searchTerm) || 
-                    itemNameEn.includes(searchTerm.toLowerCase()) ||
+                    itemNameEn.includes(searchTermLower) ||
                     itemCategory.includes(searchTerm)) {
                     return true;
                 }
                 
-                // 拼音匹配
+                // 2. 拼音匹配
                 let pinyinName = '';
                 for (let char of item.name) {
                     pinyinName += charMap[char] || char;
                 }
                 
-                if (pinyinName.toLowerCase().includes(searchTerm)) {
+                if (pinyinName.toLowerCase().includes(searchTermLower)) {
                     return true;
+                }
+                
+                // 3. 部分字元匹配（適合輸入錯字或不完整的情況）
+                // 例如：搜尋"蕉"可以找到"香蕉皮"
+                const searchChars = searchTerm.split('');
+                const nameChars = item.name.split('');
+                
+                let matchCount = 0;
+                for (let searchChar of searchChars) {
+                    if (nameChars.includes(searchChar)) {
+                        matchCount++;
+                    }
+                }
+                
+                // 如果搜尋詞的字元有超過一半在品項名稱中，就算匹配
+                if (searchChars.length > 0 && matchCount / searchChars.length >= 0.5) {
+                    return true;
+                }
+                
+                // 4. 英文單字部分匹配
+                // 例如：搜尋"banana"可以找到包含"Banana"的品項
+                if (searchTermLower.length >= 3) {
+                    const enWords = itemNameEn.split(/[\s\-()]+/);
+                    for (let word of enWords) {
+                        if (word.startsWith(searchTermLower) || word.includes(searchTermLower)) {
+                            return true;
+                        }
+                    }
+                }
+                
+                // 5. 中文單字部分匹配
+                // 例如：搜尋"杯"可以找到"咖啡杯蓋"、"優格杯"
+                if (searchTerm.length >= 1) {
+                    const nameWords = item.name.split(/[、，。]/);
+                    for (let word of nameWords) {
+                        if (word.includes(searchTerm)) {
+                            return true;
+                        }
+                    }
                 }
                 
                 return false;
